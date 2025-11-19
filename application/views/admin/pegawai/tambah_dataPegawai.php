@@ -84,8 +84,26 @@
 
 			<div class="form-group">
 				<label>Photo</label>
-				<input type="file" name="photo" class="form-control">
+				<input type="file" name="photo" class="form-control" accept="image/*" onchange="previewImage(this)">
+				<small class="form-text text-muted">Format: JPG, JPEG, PNG, TIFF. Maksimal 2MB</small>
+				<div id="imagePreview" class="mt-2" style="display: none;">
+					<label>Preview:</label><br>
+					<img id="previewImg" src="" alt="Preview" class="img-thumbnail rounded" style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #dee2e6;">
+				</div>
 			</div>
+
+			<script>
+			function previewImage(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						document.getElementById('previewImg').setAttribute('src', e.target.result);
+						document.getElementById('imagePreview').style.display = 'block';
+					}
+					reader.readAsDataURL(input.files[0]);
+				}
+			}
+			</script>
 
 
 			<button type="submit" class="btn btn-success" >Simpan</button>

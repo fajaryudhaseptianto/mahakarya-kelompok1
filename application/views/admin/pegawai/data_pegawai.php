@@ -43,7 +43,19 @@
                 <?php } else { ?>
                   <td>Pegawai</td>
                 <?php } ?>
-              <td><img src="<?php echo base_url().'photo/'.$p->photo?>" width="50px"></td>
+              <td class="text-center">
+                <?php if(!empty($p->photo) && file_exists('./photo/'.$p->photo)): ?>
+                  <img src="<?php echo base_url('photo/'.$p->photo); ?>" 
+                       alt="<?php echo $p->nama_pegawai; ?>" 
+                       class="img-thumbnail rounded-circle" 
+                       style="width: 50px; height: 50px; object-fit: cover; border: 2px solid #dee2e6;">
+                <?php else: ?>
+                  <img src="<?php echo base_url('assets/img/avatar.svg'); ?>" 
+                       alt="No Photo" 
+                       class="img-thumbnail rounded-circle" 
+                       style="width: 50px; height: 50px; object-fit: cover; border: 2px solid #dee2e6; opacity: 0.5;">
+                <?php endif; ?>
+              </td>
               
               <td>
                 <center>

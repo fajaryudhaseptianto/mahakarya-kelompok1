@@ -93,7 +93,27 @@
 
 			<div class="form-group">
 				<label>Photo</label>
-				<input type="file" name="photo" class="form-control">
+				<?php if(!empty($p->photo) && file_exists('./photo/'.$p->photo)): ?>
+					<div class="mb-2">
+						<label>Foto Saat Ini:</label><br>
+						<img src="<?php echo base_url('photo/'.$p->photo); ?>" 
+						     alt="<?php echo $p->nama_pegawai; ?>" 
+						     class="img-thumbnail rounded" 
+						     style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #dee2e6;">
+					</div>
+				<?php else: ?>
+					<div class="mb-2">
+						<label>Foto Saat Ini:</label><br>
+						<img src="<?php echo base_url('assets/img/avatar.svg'); ?>" 
+						     alt="No Photo" 
+						     class="img-thumbnail rounded" 
+						     style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #dee2e6; opacity: 0.5;">
+						<span class="text-muted small">Belum ada foto</span>
+					</div>
+				<?php endif; ?>
+				<label>Upload Foto Baru (opsional):</label>
+				<input type="file" name="photo" class="form-control" accept="image/*">
+				<small class="form-text text-muted">Format: JPG, JPEG, PNG, TIFF. Maksimal 2MB</small>
 			</div>
 
 			<button type="submit" class="btn btn-success" >Simpan</button>
