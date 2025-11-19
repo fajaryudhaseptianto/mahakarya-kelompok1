@@ -26,7 +26,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // Auto-detect base URL from environment or use default
 $base_url = getenv('RENDER_EXTERNAL_URL');
 if (empty($base_url)) {
-	$base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+	// For localhost development
+	if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'localhost') {
+		$base_url = 'http://localhost/penggajian/';
+	} else {
+		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http');
+		$host = $_SERVER['HTTP_HOST'];
+		$script_path = dirname($_SERVER['SCRIPT_NAME']);
+		// Remove /index.php if present
+		$script_path = str_replace('/index.php', '', $script_path);
+		$script_path = rtrim($script_path, '/');
+		// Ensure trailing slash
+		if (substr($script_path, -1) !== '/') {
+			$script_path .= '/';
+		}
+		$base_url = $protocol . '://' . $host . $script_path;
+	}
 }
 $config['base_url'] = $base_url;
 
